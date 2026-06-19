@@ -65,6 +65,7 @@
     "mime-types": "^2.1.35",
     "mongodb": "^6.21.0",
     "mrnima-moviedl": "^1.0.0",
+    "mumaker": "^2.0.0",
     "nima-threads-dl-api": "^0.0.4",
     "node-cache": "^5.1.2",
     "node-fetch": "^2.7.0",
