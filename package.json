@@ -50,6 +50,7 @@
     "getscreenshot.js": "^4.0.0",
     "gifted-baileys": "^2.0.6",
     "google-tts-api": "^2.0.2",
+    "gtts": "^0.2.1",
     "got": "^11.8.6",
     "human-readable": "^0.2.1",
     "imagemaker.js": "^2.0.4",
