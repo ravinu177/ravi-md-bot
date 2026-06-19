@@ -10,7 +10,8 @@ const settings = {
     storeWriteInterval: 10000,
     description: "This is a bot for managing group commands and automating tasks.",
     version: "3.0.7",
-    SESSION_ID: process.env.SESSION_ID || 'RAVI-MD~unb_e6b0_d758_ca7e_a257_1ec0_37e5'
+    // GitHub Secrets වල SESSION_ID හෝ TOKEN විදිහට දැම්මත්, නැත්නම් කෙලින්ම මෙතනින් ගත්තත් වැඩ කරයි
+    SESSION_ID: process.env.TOKEN || process.env.SESSION_ID || 'RAVI-MD~unb_e6b0_d758_ca7e_a257_1ec0_37e5'
 };
 
 module.exports = settings;
