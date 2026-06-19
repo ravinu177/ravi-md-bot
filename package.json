@@ -30,6 +30,7 @@
     "adm-zip": "^0.5.16",
     "api-dylux": "^1.8.5",
     "awesome-phonenumber": "^6.11.0",
+    "libphonenumber-js": "^1.11.4",
     "async-g-i-s": "^1.5.5",
     "axios": "^1.13.6",
     "caliph-api": "^1.0.1",
