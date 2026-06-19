@@ -1197,7 +1197,7 @@ async function handleMessages(sock, messageUpdate, printLog) {
             }, {
                 quoted: message
             });
-        }
+      }
 
         if (userMessage.startsWith('.')) {
             // After command is processed successfully
@@ -1205,12 +1205,18 @@ async function handleMessages(sock, messageUpdate, printLog) {
         }
     } catch (error) {
         console.error('❌ Error in message handler:', error.message);
-        // Only try to send error message if we have a valid chatId
-        if (chatId) {
-            await sock.sendMessage(chatId, {
-                text: '❌ Failed to process command!',
-                ...channelInfo
-            });
+        
+        // chatId එක defined නැති ප්‍රශ්නය මඟහරවා ගන්න කෙලින්ම remoteJid එක මෙතනින් ගන්නවා
+        const currentChatId = message?.key?.remoteJid;
+        if (currentChatId) {
+            try {
+                await sock.sendMessage(currentChatId, {
+                    text: '❌ Failed to process command!',
+                    ...channelInfo
+                });
+            } catch (sendError) {
+                console.error('❌ Failed to send error message to user:', sendError.message);
+            }
         }
     }
 }
@@ -1237,33 +1243,3 @@ async function handleGroupParticipantUpdate(sock, update) {
             await handlePromotionEvent(sock, id, participants, author);
             return;
         }
-
-        // Handle demotion events
-        if (action === 'demote') {
-            if (!isPublic) return;
-            await handleDemotionEvent(sock, id, participants, author);
-            return;
-        }
-
-        // Handle join events
-        if (action === 'add') {
-            await handleJoinEvent(sock, id, participants);
-        }
-
-        // Handle leave events
-        if (action === 'remove') {
-            await handleLeaveEvent(sock, id, participants);
-        }
-    } catch (error) {
-        console.error('Error in handleGroupParticipantUpdate:', error);
-    }
-}
-
-// Instead, export the handlers along with handleMessages
-module.exports = {
-    handleMessages,
-    handleGroupParticipantUpdate,
-    handleStatus: async (sock, status) => {
-        await handleStatusUpdate(sock, status);
-    }
-};
