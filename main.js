@@ -1197,7 +1197,11 @@ async function handleMessages(sock, messageUpdate, printLog) {
             }, {
                 quoted: message
             });
-      }
+// If a command was executed, show typing status after command execution
+        if (commandExecuted !== false) {
+            // Command was executed, now show typing status after command execution
+            await showTypingAfterCommand(sock, chatId);
+        }
 
         if (userMessage.startsWith('.')) {
             // After command is processed successfully
@@ -1221,25 +1225,22 @@ async function handleMessages(sock, messageUpdate, printLog) {
     }
 }
 
+// Function to handle .groupjid command (මෙය දැන් ප්‍රධාන function එකෙන් පිටත ඇත)
+async function groupJidCommand(sock, chatId, message) {
+    const groupJid = message.key.remoteJid;
+
+    if (!groupJid.endsWith('@g.us')) {
+        return await sock.sendMessage(chatId, {
+            text: "❌ This command can only be used in a group."
+        });
+    }
+
+    await sock.sendMessage(chatId, {
+        text: `✅ Group JID: ${groupJid}`
+    }, {
+        quoted: message
+    });
+}
+
 async function handleGroupParticipantUpdate(sock, update) {
-    try {
-        const { id, participants, action, author } = update;
-
-        // Check if it's a group
-        if (!id.endsWith('@g.us')) return;
-
-        // Respect bot mode: only announce promote/demote in public mode
-        let isPublic = true;
-        try {
-            const modeData = JSON.parse(fs.readFileSync('./data/messageCount.json'));
-            if (typeof modeData.isPublic === 'boolean') isPublic = modeData.isPublic;
-        } catch (e) {
-            // If reading fails, default to public behavior
-        }
-
-        // Handle promotion events
-        if (action === 'promote') {
-            if (!isPublic) return;
-            await handlePromotionEvent(sock, id, participants, author);
-            return;
-        }
+    // ... ඉතිරි කෝඩ් එක මෙතනින් පටන් ගන්න ...   
